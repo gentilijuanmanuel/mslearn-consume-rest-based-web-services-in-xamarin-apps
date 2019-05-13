@@ -126,11 +126,14 @@
   <ItemGroup>
     <PackageReference Include="Xamarin.Forms" Version="3.6.0.264807" />
     <PackageReference Include="Xamarin.Essentials" Version="1.0.1" />
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.2</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
     <ProjectReference Include="..\BookClient\BookClient.csproj">
-      <Project>{44186551-2485-4E6A-956F-45C12F1337E2}</Project>
+      <Project>{66DCA23D-E55C-4F9B-997A-D31E94656098}</Project>
       <Name>BookClient</Name>
     </ProjectReference>
   </ItemGroup>

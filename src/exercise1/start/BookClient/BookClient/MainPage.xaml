@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:BookClient"
@@ -6,8 +6,10 @@
              Title="Library Books" >
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Add New" Icon="ic_action_new.png" Clicked="OnAddNewBook" />
-        <ToolbarItem Text="Refresh" Icon="ic_autorenew.png" Clicked="OnRefresh" />
+        <!--<ToolbarItem Text="Add New" Icon="ic_action_new.png" Clicked="OnAddNewBook" />
+        <ToolbarItem Text="Refresh" Icon="ic_autorenew.png" Clicked="OnRefresh" />-->
+        <ToolbarItem Text="Add New" Clicked="OnAddNewBook" />
+        <ToolbarItem Text="Refresh" Clicked="OnRefresh" />
     </ContentPage.ToolbarItems>
 
     <ListView ItemsSource="{Binding}"

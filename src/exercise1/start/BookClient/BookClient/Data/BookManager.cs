@@ -1,16 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Net.Http;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace BookClient.Data
 {
     public class BookManager
     {
-        public Task<IEnumerable<Book>> GetAll()
+        const string Url = "http://bookserver21838.azurewebsites.net/api/books/";
+        private string authorizationKey;
+
+        private async Task<HttpClient> GetClient()
         {
-            // TODO: use GET to retrieve books
-            throw new NotImplementedException();
+            var client = new HttpClient();
+            if(string.IsNullOrEmpty(this.authorizationKey))
+            {
+                authorizationKey = await client.GetStringAsync(Url + "login");
+                authorizationKey = JsonConvert.DeserializeObject<string>(authorizationKey);
+            }
+
+            client.DefaultRequestHeaders.Add("Authorization", authorizationKey);
+            client.DefaultRequestHeaders.Add("Accept", "application/json");
+
+            return client;
+        }
+
+        public async Task<IEnumerable<Book>> GetAll()
+        {
+            var client = await this.GetClient();
+
+            var books = await client.GetStringAsync(Url);
+            return JsonConvert.DeserializeObject<IEnumerable<Book>>(books);
         }
 
         public Task<Book> Add(string title, string author, string genre)
