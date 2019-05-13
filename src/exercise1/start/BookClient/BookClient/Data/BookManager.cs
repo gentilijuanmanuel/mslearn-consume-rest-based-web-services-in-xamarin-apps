@@ -13,7 +13,6 @@ namespace BookClient.Data
 
         private async Task<HttpClient> GetClient()
         {
-            //efopewfewopfkewopewfewwfdffdw
             var client = new HttpClient();
             if(string.IsNullOrEmpty(this.authorizationKey))
             {
