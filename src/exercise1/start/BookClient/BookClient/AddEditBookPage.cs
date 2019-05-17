@@ -46,11 +46,12 @@ namespace BookClient
                 }
             };
 
-            Button button = new Button() {
+            Button button = new Button
+            {
                 BackgroundColor = existingBook != null ? Color.Gray : Color.Green,
                 TextColor = Color.White,
                 Text = existingBook != null ? "Finished" : "Add Book",
-                BorderRadius = 0,
+                CornerRadius = 0,
             };
             button.Clicked += OnDismiss;
 

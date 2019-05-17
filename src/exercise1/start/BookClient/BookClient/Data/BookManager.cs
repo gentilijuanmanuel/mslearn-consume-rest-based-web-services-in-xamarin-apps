@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
@@ -8,12 +9,11 @@ namespace BookClient.Data
 {
     public class BookManager
     {
-        const string Url = "http://bookserver21838.azurewebsites.net/api/books/";
+        const string Url = "http://bookserver25364.azurewebsites.net/api/books/";
         private string authorizationKey;
 
         private async Task<HttpClient> GetClient()
         {
-            //dewfewfgew
             var client = new HttpClient();
             if(string.IsNullOrEmpty(this.authorizationKey))
             {
@@ -35,22 +35,49 @@ namespace BookClient.Data
             return JsonConvert.DeserializeObject<IEnumerable<Book>>(books);
         }
 
-        public Task<Book> Add(string title, string author, string genre)
+        public async Task<Book> Add(string title, string author, string genre)
         {
-            // TODO: use POST to add a book
-            throw new NotImplementedException();
+            var authors = new List<string>
+            {
+                author
+            };
+
+            var newBook = new Book
+            {
+                ISBN = string.Empty,
+                Title = title,
+                Authors = authors,
+                Genre = genre,
+                PublishDate = DateTime.Now
+            };
+
+            var client = await this.GetClient();
+            var response = await client.PostAsync(
+                Url,
+                new StringContent(JsonConvert.SerializeObject(newBook),
+                Encoding.UTF8,
+                "application/json")
+            );
+
+            return JsonConvert.DeserializeObject<Book>(await response.Content.ReadAsStringAsync());
         }
 
-        public Task Update(Book book)
+        public async Task Update(Book bookToUpdate)
         {
-            // TODO: use PUT to update a book
-            throw new NotImplementedException();
+            var client = await this.GetClient();
+
+            await client.PutAsync(
+                Url + "/" + bookToUpdate.ISBN,
+                new StringContent(JsonConvert.SerializeObject(bookToUpdate),
+                Encoding.UTF8,
+                "application/json")
+            );
         }
 
-        public Task Delete(string isbn)
+        public async Task Delete(string isbn)
         {
-            // TODO: use DELETE to delete a book
-            throw new NotImplementedException();
+            var client = await GetClient();
+            await client.DeleteAsync(Url + isbn);
         }
     }
 }
